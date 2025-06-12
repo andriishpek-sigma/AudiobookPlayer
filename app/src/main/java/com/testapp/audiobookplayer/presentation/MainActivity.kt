@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer
+package com.testapp.audiobookplayer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.testapp.audiobookplayer.ui.theme.AudiobookPlayerTheme
+import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 
 class MainActivity : ComponentActivity() {
 

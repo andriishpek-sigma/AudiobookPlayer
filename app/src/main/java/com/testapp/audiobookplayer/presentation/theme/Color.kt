@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.ui.theme
+package com.testapp.audiobookplayer.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
