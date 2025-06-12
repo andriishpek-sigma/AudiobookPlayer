@@ -55,6 +55,11 @@ dependencies {
 
     implementation(libs.androidx.compose.material3)
 
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.compiler)
+
     lintChecks(libs.slack.compose.lint)
 
     testImplementation(libs.junit)
