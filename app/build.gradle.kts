@@ -52,6 +52,8 @@ dependencies {
 
     implementation(libs.androidx.compose.material3)
 
+    lintChecks(libs.slack.compose.lint)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
