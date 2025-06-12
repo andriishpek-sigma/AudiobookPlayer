@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.ksp.generated.module
 
 class AudiobookPlayerApp : Application() {
 
@@ -13,7 +14,7 @@ class AudiobookPlayerApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@AudiobookPlayerApp)
-            // TODO koin init modules
+            modules(AudiobookPlayerModule().module)
         }
     }
 }
