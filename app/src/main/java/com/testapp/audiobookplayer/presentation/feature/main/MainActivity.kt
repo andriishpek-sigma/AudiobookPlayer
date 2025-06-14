@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation
+package com.testapp.audiobookplayer.presentation.feature.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
