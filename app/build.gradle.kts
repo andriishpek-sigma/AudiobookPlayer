@@ -68,6 +68,10 @@ dependencies {
     implementation(libs.koin.annotations)
     ksp(libs.koin.compiler)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.ktor3)
+    implementation(libs.coil.svg)
+
     lintChecks(libs.slack.compose.lint)
 
     testImplementation(libs.junit)
