@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.testapp.audiobookplayer.R
+import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 
 @Composable
 fun AudiobookPlayerButtonControls(
@@ -159,5 +160,7 @@ private fun PlayerControlButton(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    AudiobookPlayerButtonControls()
+    AudiobookPlayerTheme {
+        AudiobookPlayerButtonControls()
+    }
 }
