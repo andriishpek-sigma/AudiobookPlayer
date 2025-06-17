@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -23,7 +24,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -39,7 +40,14 @@ android {
     }
 }
 
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
+    arg("KOIN_DEFAULT_MODULE", "false")
+}
+
 dependencies {
+    implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -52,7 +60,16 @@ dependencies {
 
     implementation(libs.androidx.compose.material3)
 
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.compiler)
+
+    lintChecks(libs.slack.compose.lint)
+
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.koin.test.android)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

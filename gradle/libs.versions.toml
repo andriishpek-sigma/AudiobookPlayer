@@ -1,8 +1,16 @@
 [versions]
 agp = "8.10.1"
 kotlin = "2.1.21"
+kotlinCoroutines = "1.10.2"
+koin = "4.1.0"
+koinAnnotations = "2.0.1-RC1"
 
 [libraries]
+# Coroutines
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
+
 # Android
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.16.0" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.9.1" }
@@ -18,6 +26,18 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+# Koin
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-test-android = { group = "io.insert-koin", name = "koin-android-test", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinAnnotations" }
+koin-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinAnnotations" }
+
+# Lint
+slack-compose-lint = { group = "com.slack.lint.compose", name = "compose-lint-checks", version = "1.4.2" }
+
 # Testing
 junit = { group = "junit", name = "junit", version = "4.13.2" }
 
@@ -28,3 +48,5 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version = "2.1.21-2.0.2" }
+ktlintGradle = { id = "org.jlleitschuh.gradle.ktlint", version = "12.3.0" }

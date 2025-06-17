@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer
+package com.testapp.audiobookplayer.presentation.feature.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.testapp.audiobookplayer.ui.theme.AudiobookPlayerTheme
+import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -36,13 +36,13 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+private fun GreetingPreview() {
     AudiobookPlayerTheme {
         Greeting("Android")
     }
