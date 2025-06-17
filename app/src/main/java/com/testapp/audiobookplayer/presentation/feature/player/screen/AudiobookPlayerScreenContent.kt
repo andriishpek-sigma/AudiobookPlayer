@@ -87,6 +87,16 @@ private fun ActualContent(
                 .padding(top = 32.dp),
             chapters = state.chapters,
         )
+
+        AudiobookPlayerModeSwitch(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 32.dp),
+            isAudioModeSelected = state.isAudioMode,
+            onAudioModeSelectionChange = {
+                dispatch(AudiobookPlayerIntent.ChangeMode(it))
+            },
+        )
     }
 }
 

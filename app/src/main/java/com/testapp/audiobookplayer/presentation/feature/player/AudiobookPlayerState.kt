@@ -7,6 +7,7 @@ data class AudiobookPlayerState(
     val isLoading: Boolean = false,
     val book: Book? = null,
     val chapters: UiList<Chapter>? = null,
+    val isAudioMode: Boolean = true,
 ) : UiState {
 
     data class Book(

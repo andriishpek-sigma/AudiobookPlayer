@@ -31,6 +31,10 @@ class AudiobookPlayerViewModel :
             isLoading = false,
             chapters = intent.chapters,
         )
+
+        is AudiobookPlayerIntent.ChangeMode -> state.copy(
+            isAudioMode = intent.isAudioMode,
+        )
     }
 
     private fun loadData() {

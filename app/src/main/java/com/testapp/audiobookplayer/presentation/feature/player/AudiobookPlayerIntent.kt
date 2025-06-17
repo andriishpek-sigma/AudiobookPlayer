@@ -17,4 +17,8 @@ sealed class AudiobookPlayerIntent : UiIntent {
     data class UpdateChapterData(
         val chapters: UiList<AudiobookPlayerState.Chapter>,
     ) : AudiobookPlayerIntent()
+
+    data class ChangeMode(
+        val isAudioMode: Boolean,
+    ) : AudiobookPlayerIntent()
 }
