@@ -62,6 +62,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.materialIcons)
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
