@@ -17,6 +17,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -130,9 +132,14 @@ private fun PlayerControlButton(
     modifier: Modifier = Modifier,
     customSize: Dp? = null,
 ) {
+    val haptic = LocalHapticFeedback.current
+
     IconButton(
         modifier = modifier,
-        onClick = onClick,
+        onClick = {
+            onClick()
+            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+        },
         enabled = enabled,
     ) {
         val customSizeModifier = customSize?.let {
