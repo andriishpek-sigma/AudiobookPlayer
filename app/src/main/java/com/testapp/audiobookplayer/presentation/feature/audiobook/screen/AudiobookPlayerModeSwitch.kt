@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player.screen
+package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
 import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi

@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player
+package com.testapp.audiobookplayer.presentation.feature.audiobook
 
 import com.testapp.audiobookplayer.presentation.mvi.UiState
 import com.testapp.audiobookplayer.presentation.util.UiList

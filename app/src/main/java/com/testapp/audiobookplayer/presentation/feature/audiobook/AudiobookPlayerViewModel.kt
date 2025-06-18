@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player
+package com.testapp.audiobookplayer.presentation.feature.audiobook
 
 import androidx.lifecycle.viewModelScope
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
@@ -15,7 +15,7 @@ class AudiobookPlayerViewModel :
 
     override fun reduce(
         state: AudiobookPlayerState,
-        intent: AudiobookPlayerIntent
+        intent: AudiobookPlayerIntent,
     ): AudiobookPlayerState = when (intent) {
         is AudiobookPlayerIntent.LoadData -> state.copy(
             isLoading = true,

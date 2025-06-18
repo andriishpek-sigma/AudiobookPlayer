@@ -1,10 +1,10 @@
-package com.testapp.audiobookplayer.presentation.feature.player
+package com.testapp.audiobookplayer.presentation.feature.audiobook
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.testapp.audiobookplayer.presentation.feature.player.screen.AudiobookPlayerScreenContent
+import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
 import com.testapp.audiobookplayer.presentation.mvi.ConsumeEffects
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf

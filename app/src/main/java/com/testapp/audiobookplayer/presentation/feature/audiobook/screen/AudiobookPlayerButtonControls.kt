@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player.screen
+package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image

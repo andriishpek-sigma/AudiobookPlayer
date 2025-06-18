@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player.screen
+package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,9 +38,9 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.testapp.audiobookplayer.R
-import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerIntent
-import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerState
-import com.testapp.audiobookplayer.presentation.feature.player.preview.SampleAudiobookPlayerStateProvider
+import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlayerIntent
+import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlayerState
+import com.testapp.audiobookplayer.presentation.feature.audiobook.preview.SampleAudiobookPlayerStateProvider
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 import com.testapp.audiobookplayer.presentation.util.UiList
 

@@ -1,7 +1,7 @@
-package com.testapp.audiobookplayer.presentation.feature.player.preview
+package com.testapp.audiobookplayer.presentation.feature.audiobook.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerState
+import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlayerState
 import com.testapp.audiobookplayer.presentation.util.asUiList
 
 class SampleAudiobookPlayerStateProvider : PreviewParameterProvider<AudiobookPlayerState> {
