@@ -16,6 +16,7 @@ class SampleAudiobookPlayerStateProvider : PreviewParameterProvider<AudiobookPla
             book = AudiobookPlayerState.Book(
                 imageUrl = "",
                 name = "Some book name",
+                author = "Some author",
             ),
             chapters = List(4) {
                 AudiobookPlayerState.Chapter(

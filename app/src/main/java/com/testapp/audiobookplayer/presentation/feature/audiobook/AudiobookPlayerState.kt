@@ -13,6 +13,7 @@ data class AudiobookPlayerState(
     data class Book(
         val imageUrl: String,
         val name: String,
+        val author: String,
     )
 
     data class Chapter(
