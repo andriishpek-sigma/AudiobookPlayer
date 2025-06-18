@@ -15,15 +15,18 @@ class AudiobookPlayerService : MediaSessionService() {
     // Create your player and media session in the onCreate lifecycle event
     override fun onCreate() {
         super.onCreate()
+
         val player = ExoPlayer.Builder(this)
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
+
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
             Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
+
         mediaSession = MediaSession.Builder(this, player)
             .setSessionActivity(pendingIntent)
             .build()
