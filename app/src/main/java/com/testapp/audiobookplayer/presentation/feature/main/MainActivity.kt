@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AudiobookPlayerTheme {
                 AudiobookPlayerScreen(
-                    bookId = "1",
+                    bookId = 1,
                 )
             }
         }

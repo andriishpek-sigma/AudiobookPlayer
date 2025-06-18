@@ -1,19 +1,28 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook
 
 import androidx.lifecycle.viewModelScope
+import com.testapp.audiobookplayer.domain.feature.book.model.BookId
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
 import com.testapp.audiobookplayer.presentation.mvi.dispatch
 import com.testapp.audiobookplayer.presentation.util.uiListOf
 import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.InjectedParam
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @KoinViewModel
-class AudiobookPlayerViewModel :
-    MviViewModel<AudiobookPlayerState, AudiobookPlayerIntent, AudiobookPlayerEffect>(
-        emptyState = AudiobookPlayerState(),
-    ) {
+class AudiobookPlayerViewModel(
+    @InjectedParam val bookId: Int,
+) : MviViewModel<AudiobookPlayerState, AudiobookPlayerIntent, AudiobookPlayerEffect>(
+    emptyState = AudiobookPlayerState(),
+) {
+
+    init {
+        dispatch(
+            AudiobookPlayerIntent.LoadData(bookId = BookId(bookId)),
+        )
+    }
 
     override fun reduce(
         state: AudiobookPlayerState,

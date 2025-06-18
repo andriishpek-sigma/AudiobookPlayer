@@ -18,7 +18,7 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AudiobookPlayerScreen(
-    bookId: String,
+    bookId: Int,
     modifier: Modifier = Modifier,
     store: AudiobookPlayerViewModel = koinViewModel { parametersOf(bookId) },
 ) {
