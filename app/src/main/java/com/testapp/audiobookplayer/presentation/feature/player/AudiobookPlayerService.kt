@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation
+package com.testapp.audiobookplayer.presentation.feature.player
 
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
