@@ -23,6 +23,7 @@
         <activity
             android:name=".presentation.feature.main.MainActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AudiobookPlayer">
 
             <intent-filter>
