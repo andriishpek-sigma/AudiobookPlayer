@@ -1,5 +1,6 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
+import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -22,6 +23,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +37,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.C
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.session.MediaController
+import androidx.media3.ui.compose.state.rememberPlaybackSpeedState
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -47,6 +54,7 @@ import com.testapp.audiobookplayer.presentation.util.UiList
 @Composable
 fun AudiobookPlayerScreenContent(
     state: AudiobookPlayerState,
+    mediaControllerState: State<MediaController?>,
     dispatch: (AudiobookPlayerIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -59,6 +67,7 @@ fun AudiobookPlayerScreenContent(
                 insets = WindowInsets.systemBars.union(WindowInsets.displayCutout),
             ),
             state = state,
+            mediaControllerState = mediaControllerState,
             dispatch = dispatch,
         )
     }
@@ -67,6 +76,7 @@ fun AudiobookPlayerScreenContent(
 @Composable
 private fun ActualContent(
     state: AudiobookPlayerState,
+    mediaControllerState: State<MediaController?>,
     dispatch: (AudiobookPlayerIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -86,6 +96,7 @@ private fun ActualContent(
                 .fillMaxWidth()
                 .padding(top = 32.dp),
             chapters = state.chapters,
+            mediaControllerState = mediaControllerState,
         )
 
         AudiobookPlayerModeSwitch(
@@ -132,23 +143,32 @@ private fun HeaderContent(
 @Composable
 private fun BottomContent(
     chapters: UiList<AudiobookPlayerState.Chapter>?,
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
-    // TODO bind to player instance
-    val currentKeyPointIndex = 0
+    val currentChapterIndex = mediaControllerState.value
+        ?.currentMediaItemIndex
+        ?.takeIf { it != C.INDEX_UNSET }
+
+    val currentChapter = chapters?.let {
+        if (currentChapterIndex == null) {
+            return@let null
+        }
+        it.getOrNull(currentChapterIndex)
+    }
 
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         KeyPointTitle(
-            currentNumber = currentKeyPointIndex + 1,
+            currentNumber = currentChapterIndex?.let { it + 1 } ?: 0,
             totalNumber = chapters?.size,
         )
 
         KeyPointLabel(
             modifier = Modifier.padding(top = 8.dp),
-            label = chapters?.let { it[currentKeyPointIndex] }?.label,
+            label = currentChapter?.label,
         )
 
         AudioPositionSlider(
@@ -158,11 +178,13 @@ private fun BottomContent(
         )
 
         PlaybackSpeedButton(
+            mediaControllerState = mediaControllerState,
             modifier = Modifier.padding(top = 16.dp),
         )
 
         AudiobookPlayerButtonControls(
             modifier = Modifier.padding(top = 32.dp),
+            mediaControllerState = mediaControllerState,
         )
     }
 }
@@ -213,17 +235,25 @@ private fun AudioPositionSlider(
     )
 }
 
+@OptIn(UnstableApi::class)
 @Composable
 private fun PlaybackSpeedButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
-    // TODO bind to player
+    val playbackSpeedState = mediaControllerState.value?.let {
+        rememberPlaybackSpeedState(it)
+    }
+    val currentPlaybackSpeed = playbackSpeedState?.playbackSpeed ?: 1f
 
     FilledTonalButton(
         modifier = modifier,
         onClick = {
-            // TODO toggle speed
+            val nextPlaybackSpeed = PlaybackSpeedToggleMap[currentPlaybackSpeed]
+                ?: return@FilledTonalButton
+            playbackSpeedState?.updatePlaybackSpeed(nextPlaybackSpeed)
         },
+        enabled = playbackSpeedState?.isEnabled == true,
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.filledTonalButtonColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -232,8 +262,7 @@ private fun PlaybackSpeedButton(
     ) {
         val text = stringResource(
             R.string.audiobook_player_playback_speed_button,
-            // TODO populate speed
-            "1",
+            currentPlaybackSpeed.toString(),
         )
 
         Text(
@@ -241,6 +270,13 @@ private fun PlaybackSpeedButton(
         )
     }
 }
+
+private val PlaybackSpeedToggleMap = mapOf(
+    1f to 1.5f,
+    1.5f to 2f,
+    2.5f to 0.5f,
+    0.5f to 1f,
+)
 
 @Preview
 @Composable
@@ -251,6 +287,7 @@ private fun Preview(
     AudiobookPlayerTheme {
         AudiobookPlayerScreenContent(
             state = state,
+            mediaControllerState = remember { mutableStateOf(null) },
             dispatch = {},
         )
     }

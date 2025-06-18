@@ -35,6 +35,7 @@ fun AudiobookPlayerScreen(
     AudiobookPlayerScreenContent(
         modifier = modifier,
         state = state,
+        mediaControllerState = audiobookMediaControllerState,
         dispatch = store::dispatch,
     )
 

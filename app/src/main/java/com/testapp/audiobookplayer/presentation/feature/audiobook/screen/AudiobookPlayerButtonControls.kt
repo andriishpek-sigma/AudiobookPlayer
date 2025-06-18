@@ -1,5 +1,8 @@
+@file:OptIn(UnstableApi::class)
+
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
+import androidx.annotation.OptIn
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +18,9 @@ import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -23,41 +29,62 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.session.MediaController
+import androidx.media3.ui.compose.state.rememberNextButtonState
+import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
+import androidx.media3.ui.compose.state.rememberPreviousButtonState
 import com.testapp.audiobookplayer.R
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 
 @Composable
 fun AudiobookPlayerButtonControls(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        PreviousTrackButton()
+        PreviousTrackButton(
+            mediaControllerState = mediaControllerState,
+        )
 
-        ReplayButton()
+        ReplayButton(
+            mediaControllerState = mediaControllerState,
+        )
 
-        PlayPauseButton()
+        PlayPauseButton(
+            mediaControllerState = mediaControllerState,
+        )
 
-        ForwardButton()
+        ForwardButton(
+            mediaControllerState = mediaControllerState,
+        )
 
-        NextTrackButton()
+        NextTrackButton(
+            mediaControllerState = mediaControllerState,
+        )
     }
 }
 
 @Composable
 private fun PlayPauseButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
-    // TODO bind to player
-    val isPlaying = false
+    val playPauseState = mediaControllerState.value?.let {
+        rememberPlayPauseButtonState(it)
+    }
+    val isPlaying = playPauseState?.showPlay == false
 
     PlayerControlButton(
         modifier = modifier,
-        // TODO bind to player
-        onClick = {},
-        enabled = true,
+        onClick = {
+            playPauseState?.onClick()
+        },
+        // TODO maybe progress indicator if disabled?
+        enabled = playPauseState?.isEnabled == true,
         image = if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
         contentDescriptionRes = if (isPlaying) {
             R.string.player_pause_description
@@ -70,12 +97,14 @@ private fun PlayPauseButton(
 
 @Composable
 private fun ReplayButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
     PlayerControlButton(
         modifier = modifier,
-        // TODO bind to player
-        onClick = {},
+        onClick = {
+            mediaControllerState.value?.seekBack()
+        },
         enabled = true,
         image = Icons.Rounded.Replay5,
         contentDescriptionRes = R.string.player_replay_5_description,
@@ -84,12 +113,14 @@ private fun ReplayButton(
 
 @Composable
 private fun ForwardButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
     PlayerControlButton(
         modifier = modifier,
-        // TODO bind to player
-        onClick = {},
+        onClick = {
+            mediaControllerState.value?.seekForward()
+        },
         enabled = true,
         image = Icons.Rounded.Forward10,
         contentDescriptionRes = R.string.player_forward_10_description,
@@ -98,13 +129,19 @@ private fun ForwardButton(
 
 @Composable
 private fun PreviousTrackButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
+    val previousButtonState = mediaControllerState.value?.let {
+        rememberPreviousButtonState(it)
+    }
+
     PlayerControlButton(
         modifier = modifier,
-        // TODO bind to player
-        onClick = {},
-        enabled = true,
+        onClick = {
+            previousButtonState?.onClick()
+        },
+        enabled = previousButtonState?.isEnabled == true,
         image = Icons.Rounded.SkipPrevious,
         contentDescriptionRes = R.string.player_skip_previous_description,
     )
@@ -112,13 +149,19 @@ private fun PreviousTrackButton(
 
 @Composable
 private fun NextTrackButton(
+    mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
+    val nextButtonState = mediaControllerState.value?.let {
+        rememberNextButtonState(it)
+    }
+
     PlayerControlButton(
         modifier = modifier,
-        // TODO bind to player
-        onClick = {},
-        enabled = true,
+        onClick = {
+            nextButtonState?.onClick()
+        },
+        enabled = nextButtonState?.isEnabled == true,
         image = Icons.Rounded.SkipNext,
         contentDescriptionRes = R.string.player_skip_next_description,
     )
@@ -161,6 +204,8 @@ private fun PlayerControlButton(
 @Composable
 private fun Preview() {
     AudiobookPlayerTheme {
-        AudiobookPlayerButtonControls()
+        AudiobookPlayerButtonControls(
+            mediaControllerState = remember { mutableStateOf(null) },
+        )
     }
 }
