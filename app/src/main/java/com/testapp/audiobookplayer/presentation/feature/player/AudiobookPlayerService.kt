@@ -2,6 +2,7 @@ package com.testapp.audiobookplayer.presentation.feature.player
 
 import android.app.PendingIntent
 import android.content.Intent
+import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -14,7 +15,9 @@ class AudiobookPlayerService : MediaSessionService() {
     // Create your player and media session in the onCreate lifecycle event
     override fun onCreate() {
         super.onCreate()
-        val player = ExoPlayer.Builder(this).build()
+        val player = ExoPlayer.Builder(this)
+            .setWakeMode(C.WAKE_MODE_NETWORK)
+            .build()
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
