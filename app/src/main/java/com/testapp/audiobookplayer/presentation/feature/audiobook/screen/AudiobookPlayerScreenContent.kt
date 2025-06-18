@@ -50,6 +50,7 @@ import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlaye
 import com.testapp.audiobookplayer.presentation.feature.audiobook.preview.SampleAudiobookPlayerStateProvider
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 import com.testapp.audiobookplayer.presentation.util.UiList
+import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
 
 @Composable
 fun AudiobookPlayerScreenContent(
@@ -146,9 +147,10 @@ private fun BottomContent(
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
-    val currentChapterIndex = mediaControllerState.value
-        ?.currentMediaItemIndex
-        ?.takeIf { it != C.INDEX_UNSET }
+    val currentChapterIndexState = mediaControllerState.value?.let {
+        rememberCurrentMediaItemIndexState(it)
+    }
+    val currentChapterIndex = currentChapterIndexState?.value?.takeIf { it != C.INDEX_UNSET }
 
     val currentChapter = chapters?.let {
         if (currentChapterIndex == null) {
