@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
 import com.testapp.audiobookplayer.presentation.feature.player.rememberAudiobookPlayerMediaControllerStateWithLifecycle
@@ -62,6 +63,7 @@ private fun StartAudiobookPlaybackWhenLoaded(
         }
 
         audiobookMediaController.addMediaItems(mediaItems)
+        audiobookMediaController.repeatMode = Player.REPEAT_MODE_OFF
         audiobookMediaController.prepare()
         audiobookMediaController.play()
     }
