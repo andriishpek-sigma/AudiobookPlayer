@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.uiCompose)
     implementation(libs.androidx.media3.exoplayer)
 
     implementation(platform(libs.androidx.compose.bom))

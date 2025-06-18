@@ -20,6 +20,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 
 # Media3
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidMedia3" }
+androidx-media3-uiCompose = { group = "androidx.media3", name = "media3-ui-compose", version.ref = "androidMedia3" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidMedia3" }
 
 # Compose
