@@ -23,6 +23,7 @@ class AudiobookPlayerService : MediaSessionService() {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .setSeekBackIncrementMs(5000)
             .setSeekForwardIncrementMs(10000)
+            .setHandleAudioBecomingNoisy(true)
             .build()
 
         val pendingIntent = PendingIntent.getActivity(
