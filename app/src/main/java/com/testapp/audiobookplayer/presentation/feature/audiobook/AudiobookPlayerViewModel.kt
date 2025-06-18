@@ -4,10 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
 import com.testapp.audiobookplayer.presentation.mvi.dispatch
 import com.testapp.audiobookplayer.presentation.util.uiListOf
+import org.koin.android.annotation.KoinViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@KoinViewModel
 class AudiobookPlayerViewModel :
     MviViewModel<AudiobookPlayerState, AudiobookPlayerIntent, AudiobookPlayerEffect>(
         emptyState = AudiobookPlayerState(),
