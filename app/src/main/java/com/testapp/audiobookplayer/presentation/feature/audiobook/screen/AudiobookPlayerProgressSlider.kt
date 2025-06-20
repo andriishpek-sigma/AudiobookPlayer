@@ -16,7 +16,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -28,22 +33,48 @@ import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 fun AudiobookPlayerProgressSlider(
     position: Long,
     duration: Long,
+    updatePosition: (Long) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
     val progress = if (duration == 0L) 0f else position.toFloat() / duration
 
+    var uncommittedProgress by remember { mutableStateOf<Float?>(null) }
+    var isUncommittedProgressNotified by remember { mutableStateOf(false) }
+
     val interactionSource = remember { MutableInteractionSource() }
+
+    // Reset uncommitted progress only when position update is completed
+    LaunchedEffect(position) {
+        if (!isUncommittedProgressNotified) {
+            return@LaunchedEffect
+        }
+
+        uncommittedProgress = null
+        isUncommittedProgressNotified = false
+    }
 
     Slider(
         modifier = modifier.fillMaxWidth(),
         enabled = enabled,
-        value = progress,
-        // TODO implement
-        onValueChange = {},
+        value = uncommittedProgress ?: progress,
+        onValueChange = {
+            uncommittedProgress = it
+            isUncommittedProgressNotified = false
+        },
         valueRange = 0f..1f,
-        // TODO implement
-        onValueChangeFinished = {},
+        onValueChangeFinished = {
+            val lastUncommittedProgress = uncommittedProgress ?: return@Slider
+
+            val newPosition = (lastUncommittedProgress * duration).toLong()
+            if (position == newPosition) {
+                uncommittedProgress = null
+                return@Slider
+            }
+
+            isUncommittedProgressNotified = true
+            updatePosition(newPosition)
+        },
         interactionSource = interactionSource,
         thumb = { sliderState ->
             CustomThumb(
@@ -106,9 +137,14 @@ private fun CustomTrack(
 @Composable
 private fun Preview() {
     AudiobookPlayerTheme {
+        var position by remember { mutableLongStateOf(20) }
+
         AudiobookPlayerProgressSlider(
-            position = 2,
-            duration = 10,
+            position = position,
+            duration = 100,
+            updatePosition = {
+                position = it
+            },
         )
     }
 }

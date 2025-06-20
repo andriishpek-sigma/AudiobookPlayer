@@ -247,6 +247,9 @@ private fun AudioTimeContent(
             modifier = Modifier.weight(1f),
             position = livePositionState?.value ?: 0,
             duration = durationState?.value ?: 0,
+            updatePosition = { position ->
+                mediaControllerState.value?.seekTo(position)
+            },
         )
 
         AudioTimeText(
