@@ -29,6 +29,7 @@ class ContentDurationState(
             if (
                 events.containsAny(
                     Player.EVENT_MEDIA_ITEM_TRANSITION,
+                    Player.EVENT_PLAYBACK_STATE_CHANGED,
                     Player.EVENT_AVAILABLE_COMMANDS_CHANGED,
                 )
             ) {
