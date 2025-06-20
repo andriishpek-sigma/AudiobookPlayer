@@ -12,8 +12,9 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
-import com.testapp.audiobookplayer.presentation.feature.player.rememberAudiobookPlayerMediaControllerStateWithLifecycle
+import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerService
 import com.testapp.audiobookplayer.presentation.mvi.ConsumeEffects
+import com.testapp.audiobookplayer.presentation.util.media3.rememberMediaControllerStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -25,7 +26,9 @@ fun AudiobookPlayerScreen(
 ) {
     val state by store.observeState().collectAsStateWithLifecycle()
 
-    val audiobookMediaControllerState = rememberAudiobookPlayerMediaControllerStateWithLifecycle()
+    val audiobookMediaControllerState = rememberMediaControllerStateWithLifecycle(
+        classProvider = { AudiobookPlayerService::class.java },
+    )
 
     ConsumeEffects(store.observeEffect()) { effect ->
 //        when (effect) {

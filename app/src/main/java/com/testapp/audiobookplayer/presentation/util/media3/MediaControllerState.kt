@@ -1,4 +1,4 @@
-package com.testapp.audiobookplayer.presentation.feature.player
+package com.testapp.audiobookplayer.presentation.util.media3
 
 import android.content.ComponentName
 import androidx.compose.runtime.Composable
@@ -12,13 +12,14 @@ import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 
 @Composable
-fun rememberAudiobookPlayerMediaControllerStateWithLifecycle(): State<MediaController?> {
+fun rememberMediaControllerStateWithLifecycle(
+    classProvider: () -> Class<*>,
+): State<MediaController?> {
     val controllerState = remember { mutableStateOf<MediaController?>(null) }
 
     val context = LocalContext.current.applicationContext
     LifecycleStartEffect(Unit) {
-        val sessionToken =
-            SessionToken(context, ComponentName(context, AudiobookPlayerService::class.java))
+        val sessionToken = SessionToken(context, ComponentName(context, classProvider()))
 
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
         controllerFuture.addListener(
