@@ -3,9 +3,11 @@ package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.displayCutout
@@ -49,7 +51,13 @@ import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlaye
 import com.testapp.audiobookplayer.presentation.feature.audiobook.preview.SampleAudiobookPlayerStateProvider
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 import com.testapp.audiobookplayer.presentation.util.UiList
+import com.testapp.audiobookplayer.presentation.util.media3.rememberContentDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
+import com.testapp.audiobookplayer.presentation.util.media3.rememberLiveContentPositionState
+import java.util.Locale
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun AudiobookPlayerScreenContent(
@@ -172,10 +180,11 @@ private fun BottomContent(
             label = currentChapter?.label,
         )
 
-        AudioPositionSlider(
+        AudioTimeContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp),
+            mediaControllerState = mediaControllerState,
         )
 
         PlaybackSpeedButton(
@@ -221,6 +230,61 @@ private fun KeyPointLabel(
         text = label ?: "",
         textAlign = TextAlign.Center,
     )
+}
+
+@Composable
+private fun AudioTimeContent(
+    mediaControllerState: State<MediaController?>,
+    modifier: Modifier = Modifier,
+) {
+    val durationState = mediaControllerState.value?.let {
+        rememberContentDurationState(it)
+    }
+    val livePositionState = mediaControllerState.value?.let {
+        rememberLiveContentPositionState(it)
+    }
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AudioTimeText(
+            timeValueMillis = livePositionState?.value ?: 0,
+        )
+
+        AudioPositionSlider(
+            modifier = Modifier.weight(1f),
+        )
+
+        AudioTimeText(
+            timeValueMillis = durationState?.value ?: 0,
+        )
+    }
+}
+
+@Composable
+private fun AudioTimeText(
+    timeValueMillis: Long,
+    modifier: Modifier = Modifier,
+) {
+    val text = remember(timeValueMillis) {
+        formatAudioTime(timeValueMillis.milliseconds)
+    }
+
+    Text(
+        modifier = modifier,
+        text = text,
+        color = AudiobookPlayerTheme.colors.secondaryContent,
+        style = MaterialTheme.typography.bodySmall,
+    )
+}
+
+private fun formatAudioTime(duration: Duration): String {
+    val minutes = duration.inWholeMinutes
+    val seconds = (duration - minutes.minutes).inWholeSeconds
+
+    return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
 }
 
 @Composable
