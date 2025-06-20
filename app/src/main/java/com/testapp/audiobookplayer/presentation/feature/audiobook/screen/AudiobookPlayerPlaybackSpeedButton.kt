@@ -55,22 +55,25 @@ fun AudiobookPlayerPlaybackSpeedButton(
         ),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
     ) {
-        val formattedPlaybackSpeed = remember(currentPlaybackSpeed) {
-            DecimalFormat.getInstance().apply {
-                minimumFractionDigits = 0
-                maximumFractionDigits = 2
-            }.format(currentPlaybackSpeed.toDouble())
-        }
-
-        val text = stringResource(
-            R.string.audiobook_player_playback_speed_button,
-            formattedPlaybackSpeed,
-        )
-
         Text(
-            text = text,
+            text = formatPlaybackSpeed(currentPlaybackSpeed),
         )
     }
+}
+
+@Composable
+private fun formatPlaybackSpeed(speed: Float): String {
+    val formattedSpeed = remember(speed) {
+        DecimalFormat.getInstance().apply {
+            minimumFractionDigits = 0
+            maximumFractionDigits = 2
+        }.format(speed.toDouble())
+    }
+
+    return stringResource(
+        R.string.audiobook_player_playback_speed_button,
+        formattedSpeed,
+    )
 }
 
 @Preview(showBackground = true)
