@@ -10,6 +10,9 @@ data class AudiobookPlayerState(
     val isAudioMode: Boolean = true,
 ) : UiState {
 
+    val isPlayerDataLoaded: Boolean
+        get() = book != null && chapters != null && chapters.isNotEmpty()
+
     data class Book(
         val imageUrl: String,
         val name: String,

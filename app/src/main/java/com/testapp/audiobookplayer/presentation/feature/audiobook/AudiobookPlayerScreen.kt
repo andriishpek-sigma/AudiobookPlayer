@@ -27,6 +27,7 @@ fun AudiobookPlayerScreen(
     val state by store.observeState().collectAsStateWithLifecycle()
 
     val audiobookMediaControllerState = rememberMediaControllerStateWithLifecycle(
+        isEnabled = state.isPlayerDataLoaded,
         classProvider = { AudiobookPlayerService::class.java },
     )
 

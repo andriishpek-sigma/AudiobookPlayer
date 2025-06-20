@@ -13,12 +13,18 @@ import com.google.common.util.concurrent.MoreExecutors
 
 @Composable
 fun rememberMediaControllerStateWithLifecycle(
+    isEnabled: Boolean = true,
     classProvider: () -> Class<*>,
 ): State<MediaController?> {
     val controllerState = remember { mutableStateOf<MediaController?>(null) }
 
     val context = LocalContext.current.applicationContext
-    LifecycleStartEffect(Unit) {
+    LifecycleStartEffect(isEnabled) {
+        if (!isEnabled) {
+            controllerState.value = null
+            onStopOrDispose {}
+        }
+
         val sessionToken = SessionToken(context, ComponentName(context, classProvider()))
 
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
