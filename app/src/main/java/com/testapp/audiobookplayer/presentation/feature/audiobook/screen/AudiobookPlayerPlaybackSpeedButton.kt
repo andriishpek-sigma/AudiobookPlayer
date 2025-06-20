@@ -1,6 +1,7 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
 import androidx.annotation.OptIn
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,25 +58,30 @@ fun AudiobookPlayerPlaybackSpeedButton(
         ),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
     ) {
+        val formattedSpeed = remember(currentPlaybackSpeed) {
+            formatPlaybackSpeed(currentPlaybackSpeed)
+        }
+
+        AnimatedContent(
+            targetState = formattedSpeed,
+            contentAlignment = Alignment.CenterStart,
+        ) { currentText ->
+            Text(
+                text = currentText,
+            )
+        }
+
         Text(
-            text = formatPlaybackSpeed(currentPlaybackSpeed),
+            text = stringResource(R.string.audiobook_player_playback_speed_button),
         )
     }
 }
 
-@Composable
 private fun formatPlaybackSpeed(speed: Float): String {
-    val formattedSpeed = remember(speed) {
-        DecimalFormat.getInstance().apply {
-            minimumFractionDigits = 0
-            maximumFractionDigits = 2
-        }.format(speed.toDouble())
-    }
-
-    return stringResource(
-        R.string.audiobook_player_playback_speed_button,
-        formattedSpeed,
-    )
+    return DecimalFormat.getInstance().apply {
+        minimumFractionDigits = 0
+        maximumFractionDigits = 2
+    }.format(speed.toDouble())
 }
 
 @Preview(showBackground = true)

@@ -3,7 +3,7 @@
 
     <!--Player screen-->
     <string name="audiobook_player_key_point_title">Key point %1$d of %2$d</string>
-    <string name="audiobook_player_playback_speed_button">%sx speed</string>
+    <string name="audiobook_player_playback_speed_button">x speed</string>
 
     <!--PLayer controls-->
     <string name="player_play_description">Play</string>
