@@ -1,9 +1,7 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
@@ -27,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -247,8 +243,10 @@ private fun AudioTimeContent(
             timeValueMillis = livePositionState?.value ?: 0,
         )
 
-        AudioPositionSlider(
+        AudiobookPlayerProgressSlider(
             modifier = Modifier.weight(1f),
+            position = livePositionState?.value ?: 0,
+            duration = durationState?.value ?: 0,
         )
 
         AudioTimeText(
@@ -279,19 +277,6 @@ private fun formatAudioTime(duration: Duration): String {
     val seconds = (duration - minutes.minutes).inWholeSeconds
 
     return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-}
-
-@Composable
-private fun AudioPositionSlider(
-    modifier: Modifier = Modifier,
-) {
-    // TODO implement
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(20.dp)
-            .background(Color.LightGray),
-    )
 }
 
 @Preview
