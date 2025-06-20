@@ -8,7 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Forward10
 import androidx.compose.material.icons.rounded.Pause
@@ -29,7 +28,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
@@ -93,7 +91,6 @@ private fun PlayPauseButton(
         } else {
             R.string.player_play_description
         },
-        customSize = 56.dp,
     )
 }
 
@@ -176,7 +173,6 @@ private fun PlayerControlButton(
     image: ImageVector,
     @StringRes contentDescriptionRes: Int,
     modifier: Modifier = Modifier,
-    customSize: Dp? = null,
 ) {
     val haptic = LocalHapticFeedback.current
 
@@ -188,14 +184,8 @@ private fun PlayerControlButton(
         },
         enabled = enabled,
     ) {
-        val customSizeModifier = customSize?.let {
-            Modifier.requiredSize(it)
-        } ?: Modifier
-
         Image(
-            modifier = Modifier
-                .fillMaxSize()
-                .then(customSizeModifier),
+            modifier = Modifier.fillMaxSize(),
             imageVector = image,
             contentDescription = stringResource(contentDescriptionRes),
             colorFilter = ColorFilter.tint(LocalContentColor.current),
