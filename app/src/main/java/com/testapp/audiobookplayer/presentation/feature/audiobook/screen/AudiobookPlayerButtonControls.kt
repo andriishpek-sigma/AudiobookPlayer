@@ -17,11 +17,13 @@ import androidx.compose.material.icons.rounded.Replay5
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -196,6 +198,7 @@ private fun PlayerControlButton(
                 .then(customSizeModifier),
             imageVector = image,
             contentDescription = stringResource(contentDescriptionRes),
+            colorFilter = ColorFilter.tint(LocalContentColor.current),
         )
     }
 }
