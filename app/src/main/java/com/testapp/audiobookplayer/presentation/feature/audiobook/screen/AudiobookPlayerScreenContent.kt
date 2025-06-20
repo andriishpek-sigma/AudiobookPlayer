@@ -1,12 +1,10 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
-import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,8 +17,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,9 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
-import androidx.media3.ui.compose.state.rememberPlaybackSpeedState
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -54,7 +48,6 @@ import com.testapp.audiobookplayer.presentation.util.UiList
 import com.testapp.audiobookplayer.presentation.util.media3.rememberContentDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberLiveContentPositionState
-import java.text.DecimalFormat
 import java.util.Locale
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -188,7 +181,7 @@ private fun BottomContent(
             mediaControllerState = mediaControllerState,
         )
 
-        PlaybackSpeedButton(
+        AudiobookPlayerPlaybackSpeedButton(
             modifier = Modifier.padding(top = 16.dp),
             mediaControllerState = mediaControllerState,
         )
@@ -300,56 +293,6 @@ private fun AudioPositionSlider(
             .background(Color.LightGray),
     )
 }
-
-@OptIn(UnstableApi::class)
-@Composable
-private fun PlaybackSpeedButton(
-    mediaControllerState: State<MediaController?>,
-    modifier: Modifier = Modifier,
-) {
-    val playbackSpeedState = mediaControllerState.value?.let {
-        rememberPlaybackSpeedState(it)
-    }
-    val currentPlaybackSpeed = playbackSpeedState?.playbackSpeed ?: 1f
-
-    FilledTonalButton(
-        modifier = modifier,
-        onClick = {
-            val nextPlaybackSpeed = PlaybackSpeedToggleMap[currentPlaybackSpeed]
-                ?: return@FilledTonalButton
-            playbackSpeedState?.updatePlaybackSpeed(nextPlaybackSpeed)
-        },
-        enabled = playbackSpeedState?.isEnabled == true,
-        shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.filledTonalButtonColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-        ),
-        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-    ) {
-        val formattedPlaybackSpeed = remember(currentPlaybackSpeed) {
-            DecimalFormat.getInstance().apply {
-                minimumFractionDigits = 0
-                maximumFractionDigits = 2
-            }.format(currentPlaybackSpeed.toDouble())
-        }
-
-        val text = stringResource(
-            R.string.audiobook_player_playback_speed_button,
-            formattedPlaybackSpeed,
-        )
-
-        Text(
-            text = text,
-        )
-    }
-}
-
-private val PlaybackSpeedToggleMap = mapOf(
-    1f to 1.5f,
-    1.5f to 2f,
-    2.5f to 0.5f,
-    0.5f to 1f,
-)
 
 @Preview
 @Composable
