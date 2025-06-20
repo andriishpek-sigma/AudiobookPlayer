@@ -37,7 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.ui.compose.state.rememberPlaybackSpeedState
@@ -150,7 +149,7 @@ private fun BottomContent(
     val currentChapterIndexState = mediaControllerState.value?.let {
         rememberCurrentMediaItemIndexState(it)
     }
-    val currentChapterIndex = currentChapterIndexState?.value?.takeIf { it != C.INDEX_UNSET }
+    val currentChapterIndex = currentChapterIndexState?.value
 
     val currentChapter = chapters?.let {
         if (currentChapterIndex == null) {

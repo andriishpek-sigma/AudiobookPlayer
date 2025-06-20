@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.listen
 
@@ -40,6 +41,6 @@ class CurrentMediaItemIndexState(
         if (!player.isCommandAvailable(Player.COMMAND_GET_TIMELINE)) {
             return null
         }
-        return player.currentMediaItemIndex
+        return player.currentMediaItemIndex.takeIf { it != C.INDEX_UNSET }
     }
 }
