@@ -54,6 +54,7 @@ import com.testapp.audiobookplayer.presentation.util.UiList
 import com.testapp.audiobookplayer.presentation.util.media3.rememberContentDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberLiveContentPositionState
+import java.text.DecimalFormat
 import java.util.Locale
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -325,9 +326,16 @@ private fun PlaybackSpeedButton(
         ),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
     ) {
+        val formattedPlaybackSpeed = remember(currentPlaybackSpeed) {
+            DecimalFormat.getInstance().apply {
+                minimumFractionDigits = 0
+                maximumFractionDigits = 2
+            }.format(currentPlaybackSpeed.toDouble())
+        }
+
         val text = stringResource(
             R.string.audiobook_player_playback_speed_button,
-            currentPlaybackSpeed.toString(),
+            formattedPlaybackSpeed,
         )
 
         Text(
