@@ -71,7 +71,7 @@ dependencies {
     ksp(libs.koin.compiler)
 
     implementation(libs.coil.compose)
-    implementation(libs.coil.ktor3)
+    implementation(libs.coil.okhttp)
     implementation(libs.coil.svg)
 
     lintChecks(libs.slack.compose.lint)
