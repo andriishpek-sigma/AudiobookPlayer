@@ -26,6 +26,7 @@ import java.text.DecimalFormat
 private val PlaybackSpeedToggleMap = mapOf(
     1f to 1.5f,
     1.5f to 2f,
+    2f to 2.5f,
     2.5f to 0.5f,
     0.5f to 1f,
 )
