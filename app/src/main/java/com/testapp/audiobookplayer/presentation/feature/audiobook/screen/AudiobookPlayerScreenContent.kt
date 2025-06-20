@@ -179,8 +179,8 @@ private fun BottomContent(
         )
 
         PlaybackSpeedButton(
-            mediaControllerState = mediaControllerState,
             modifier = Modifier.padding(top = 16.dp),
+            mediaControllerState = mediaControllerState,
         )
 
         AudiobookPlayerButtonControls(
