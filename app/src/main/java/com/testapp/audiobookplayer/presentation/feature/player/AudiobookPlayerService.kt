@@ -23,6 +23,7 @@ class AudiobookPlayerService : MediaSessionService() {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .setSeekBackIncrementMs(5000)
             .setSeekForwardIncrementMs(10000)
+            .setMaxSeekToPreviousPositionMs(Long.MAX_VALUE)
             .setHandleAudioBecomingNoisy(true)
             .build()
 
