@@ -38,7 +38,8 @@ import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 
 private val IconSize = 48.dp
 private val IconPadding = 12.dp
-private const val AnimationSpringStiffness = Spring.StiffnessMedium
+private val AnimationSpringStiffness
+    get() = Spring.StiffnessMedium
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
