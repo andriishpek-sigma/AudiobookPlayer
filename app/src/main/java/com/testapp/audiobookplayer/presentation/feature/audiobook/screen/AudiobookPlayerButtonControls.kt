@@ -44,11 +44,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
+import androidx.media3.ui.compose.state.PlayPauseButtonState
 import androidx.media3.ui.compose.state.rememberNextButtonState
 import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
 import androidx.media3.ui.compose.state.rememberPreviousButtonState
 import com.testapp.audiobookplayer.R
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
+import com.testapp.audiobookplayer.presentation.util.media3.PlayerIsLoadingState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberPlayerIsLoadingState
 
 @Composable
@@ -90,10 +92,18 @@ private fun PlayPauseButtonWithLoader(
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
+    val playPauseState = mediaControllerState.value?.let {
+        rememberPlayPauseButtonState(it)
+    }
     val playerIsLoadingState = mediaControllerState.value?.let {
         rememberPlayerIsLoadingState(it)
     }
-    val isLoading = isDataLoading || playerIsLoadingState?.value != false
+
+    val isLoading = shouldShowLoadingIndicator(
+        isDataLoading = isDataLoading,
+        playPauseState = playPauseState,
+        playerIsLoadingState = playerIsLoadingState,
+    )
 
     Box(
         modifier = modifier,
@@ -109,19 +119,37 @@ private fun PlayPauseButtonWithLoader(
         }
 
         PlayPauseButton(
-            mediaControllerState = mediaControllerState,
+            playPauseState = playPauseState,
         )
     }
 }
 
+private fun shouldShowLoadingIndicator(
+    isDataLoading: Boolean,
+    playPauseState: PlayPauseButtonState?,
+    playerIsLoadingState: PlayerIsLoadingState?,
+): Boolean {
+    // Show while loading
+    if (isDataLoading) {
+        return true
+    }
+    if (playPauseState == null || playerIsLoadingState == null) {
+        return true
+    }
+
+    // Don't show if loaded but paused
+    if (playPauseState.showPlay) {
+        return false
+    }
+
+    return playerIsLoadingState.value
+}
+
 @Composable
 private fun PlayPauseButton(
-    mediaControllerState: State<MediaController?>,
+    playPauseState: PlayPauseButtonState?,
     modifier: Modifier = Modifier,
 ) {
-    val playPauseState = mediaControllerState.value?.let {
-        rememberPlayPauseButtonState(it)
-    }
     val isPlaying = playPauseState?.showPlay == false
 
     PlayerControlButton(
