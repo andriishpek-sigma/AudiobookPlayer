@@ -96,6 +96,7 @@ private fun ActualContent(
                 .weight(1f)
                 .fillMaxWidth()
                 .padding(top = 32.dp),
+            isLoading = state.isLoading,
             chapters = state.chapters,
             mediaControllerState = mediaControllerState,
         )
@@ -144,6 +145,7 @@ private fun HeaderContent(
 
 @Composable
 private fun BottomContent(
+    isLoading: Boolean,
     chapters: UiList<AudiobookPlayerState.Chapter>?,
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
@@ -188,6 +190,7 @@ private fun BottomContent(
 
         AudiobookPlayerButtonControls(
             modifier = Modifier.padding(top = 32.dp),
+            isDataLoading = isLoading,
             mediaControllerState = mediaControllerState,
         )
     }

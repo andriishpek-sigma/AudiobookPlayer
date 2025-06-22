@@ -53,6 +53,7 @@ import com.testapp.audiobookplayer.presentation.util.media3.rememberPlayerIsLoad
 
 @Composable
 fun AudiobookPlayerButtonControls(
+    isDataLoading: Boolean,
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
@@ -69,6 +70,7 @@ fun AudiobookPlayerButtonControls(
         )
 
         PlayPauseButtonWithLoader(
+            isDataLoading = isDataLoading,
             mediaControllerState = mediaControllerState,
         )
 
@@ -84,13 +86,14 @@ fun AudiobookPlayerButtonControls(
 
 @Composable
 private fun PlayPauseButtonWithLoader(
+    isDataLoading: Boolean,
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
     val playerIsLoadingState = mediaControllerState.value?.let {
         rememberPlayerIsLoadingState(it)
     }
-    val isLoading = playerIsLoadingState?.value != false
+    val isLoading = isDataLoading || playerIsLoadingState?.value != false
 
     Box(
         modifier = modifier,
@@ -258,6 +261,7 @@ private fun PlayerControlButton(
 private fun Preview() {
     AudiobookPlayerTheme {
         AudiobookPlayerButtonControls(
+            isDataLoading = true,
             mediaControllerState = remember { mutableStateOf(null) },
         )
     }
