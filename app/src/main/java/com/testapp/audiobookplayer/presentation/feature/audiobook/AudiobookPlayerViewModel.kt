@@ -1,12 +1,14 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook
 
 import androidx.lifecycle.viewModelScope
+import com.testapp.audiobookplayer.domain.feature.book.model.Book
+import com.testapp.audiobookplayer.domain.feature.book.model.BookChapter
 import com.testapp.audiobookplayer.domain.feature.book.model.BookId
+import com.testapp.audiobookplayer.domain.feature.book.usecase.GetBookChaptersUseCase
+import com.testapp.audiobookplayer.domain.feature.book.usecase.GetBookUseCase
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
 import com.testapp.audiobookplayer.presentation.mvi.dispatch
-import com.testapp.audiobookplayer.presentation.util.uiListOf
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import com.testapp.audiobookplayer.presentation.util.asUiList
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 import org.koin.core.annotation.InjectedParam
@@ -14,6 +16,8 @@ import org.koin.core.annotation.InjectedParam
 @KoinViewModel
 class AudiobookPlayerViewModel(
     @InjectedParam val bookId: BookId,
+    private val getBookUseCase: GetBookUseCase,
+    private val getBookChaptersUseCase: GetBookChaptersUseCase,
 ) : MviViewModel<AudiobookPlayerState, AudiobookPlayerIntent, AudiobookPlayerEffect>(
     emptyState = AudiobookPlayerState(),
 ) {
@@ -50,53 +54,46 @@ class AudiobookPlayerViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            // TODO load actual data with flows
-
-            async {
-                delay(250)
-
-                dispatch {
-                    AudiobookPlayerIntent.UpdateBookData(
-                        book = AudiobookPlayerState.Book(
-                            imageUrl = "https://4.img-dpreview.com/files/p/E~TS1180x0~articles/" +
-                                "3925134721/0266554465.jpeg",
-                            name = "Some book name",
-                            author = "Some Author",
-                        ),
-                    )
-                }
-            }
-
-            async {
-                delay(500)
-
-                dispatch {
-                    AudiobookPlayerIntent.UpdateChapterData(
-                        chapters = uiListOf(
-                            AudiobookPlayerState.Chapter(
-                                id = "1",
-                                label = "Chapter 1",
-                                audioUrl = "https://download.samplelib.com/mp3/sample-6s.mp3",
-                            ),
-                            AudiobookPlayerState.Chapter(
-                                id = "2",
-                                label = "Chapter 2",
-                                audioUrl = "https://download.samplelib.com/mp3/sample-9s.mp3",
-                            ),
-                            AudiobookPlayerState.Chapter(
-                                id = "3",
-                                label = "Chapter 3",
-                                audioUrl = "https://download.samplelib.com/mp3/sample-12s.mp3",
-                            ),
-                            AudiobookPlayerState.Chapter(
-                                id = "4",
-                                label = "Chapter 4",
-                                audioUrl = "https://download.samplelib.com/mp3/sample-15s.mp3",
-                            ),
-                        ),
-                    )
-                }
-            }
+            launch { loadBook() }
+            launch { loadBookChapters() }
         }
     }
+
+    private suspend fun loadBook() {
+        val book = getBookUseCase(bookId).getOrElse {
+            // TODO error handling
+            return
+        }
+
+        val uiBook = book.toUiBook()
+
+        dispatch {
+            AudiobookPlayerIntent.UpdateBookData(uiBook)
+        }
+    }
+
+    private suspend fun loadBookChapters() {
+        val chapters = getBookChaptersUseCase(bookId).getOrElse {
+            // TODO error handling
+            return
+        }
+
+        val uiChapters = chapters.map { it.toUiChapter() }.asUiList()
+
+        dispatch {
+            AudiobookPlayerIntent.UpdateChapterData(uiChapters)
+        }
+    }
+
+    private fun Book.toUiBook() = AudiobookPlayerState.Book(
+        imageUrl = imageUrl,
+        name = name,
+        author = author,
+    )
+
+    private fun BookChapter.toUiChapter() = AudiobookPlayerState.Chapter(
+        id = id.value.toString(),
+        label = label,
+        audioUrl = audioUrl,
+    )
 }
