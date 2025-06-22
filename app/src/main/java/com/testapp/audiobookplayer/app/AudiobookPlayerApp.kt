@@ -1,6 +1,7 @@
-package com.testapp.audiobookplayer
+package com.testapp.audiobookplayer.app
 
 import android.app.Application
+import com.testapp.audiobookplayer.AudiobookPlayerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +15,10 @@ class AudiobookPlayerApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@AudiobookPlayerApp)
-            modules(AudiobookPlayerModule().module)
+            modules(
+                DispatchersModule().module,
+                AudiobookPlayerModule().module
+            )
         }
     }
 }

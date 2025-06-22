@@ -15,6 +15,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionError
+import com.testapp.audiobookplayer.domain.feature.book.model.BookId
 import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
 import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerService
 import com.testapp.audiobookplayer.presentation.mvi.ConsumeEffects
@@ -26,7 +27,7 @@ import org.koin.core.parameter.parametersOf
 fun AudiobookPlayerScreen(
     bookId: Int,
     modifier: Modifier = Modifier,
-    store: AudiobookPlayerViewModel = koinViewModel { parametersOf(bookId) },
+    store: AudiobookPlayerViewModel = koinViewModel { parametersOf(BookId(bookId)) },
 ) {
     val state by store.observeState().collectAsStateWithLifecycle()
 
@@ -64,7 +65,7 @@ private fun StartAudiobookPlaybackWhenLoaded(
 
     val audiobookMediaController = audiobookMediaControllerState.value ?: return
 
-    LaunchedEffect(book, chapters) {
+    LaunchedEffect(audiobookMediaController, book, chapters) {
         val mediaItems = chapters.map {
             createMediaItem(
                 book = book,
