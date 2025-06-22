@@ -126,7 +126,6 @@ private fun PlayPauseButton(
         onClick = {
             playPauseState?.onClick()
         },
-        // TODO maybe progress indicator if disabled?
         enabled = playPauseState?.isEnabled == true,
         image = if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
         imagePadding = 4.dp,
