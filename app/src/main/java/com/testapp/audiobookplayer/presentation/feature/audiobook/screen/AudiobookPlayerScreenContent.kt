@@ -210,7 +210,7 @@ private fun KeyPointTitle(
         text = text,
         color = AudiobookPlayerTheme.colors.secondaryContent,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.bodyMedium,
+        style = MaterialTheme.typography.labelLarge,
     )
 }
 
