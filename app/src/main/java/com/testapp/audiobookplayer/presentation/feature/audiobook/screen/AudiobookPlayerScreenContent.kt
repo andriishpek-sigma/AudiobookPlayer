@@ -223,6 +223,7 @@ private fun KeyPointLabel(
         modifier = modifier,
         text = label ?: "",
         textAlign = TextAlign.Center,
+        maxLines = 3,
     )
 }
 
