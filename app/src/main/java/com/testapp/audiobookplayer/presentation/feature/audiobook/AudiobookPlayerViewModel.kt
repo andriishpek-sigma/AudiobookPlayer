@@ -5,22 +5,22 @@ import com.testapp.audiobookplayer.domain.feature.book.model.BookId
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
 import com.testapp.audiobookplayer.presentation.mvi.dispatch
 import com.testapp.audiobookplayer.presentation.util.uiListOf
-import org.koin.android.annotation.KoinViewModel
-import org.koin.core.annotation.InjectedParam
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.InjectedParam
 
 @KoinViewModel
 class AudiobookPlayerViewModel(
-    @InjectedParam val bookId: Int,
+    @InjectedParam val bookId: BookId,
 ) : MviViewModel<AudiobookPlayerState, AudiobookPlayerIntent, AudiobookPlayerEffect>(
     emptyState = AudiobookPlayerState(),
 ) {
 
     init {
         dispatch(
-            AudiobookPlayerIntent.LoadData(bookId = BookId(bookId)),
+            AudiobookPlayerIntent.LoadData(bookId = bookId),
         )
     }
 
