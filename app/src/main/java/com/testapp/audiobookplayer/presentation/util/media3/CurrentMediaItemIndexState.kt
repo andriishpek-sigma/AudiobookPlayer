@@ -41,6 +41,11 @@ class CurrentMediaItemIndexState(
         if (!player.isCommandAvailable(Player.COMMAND_GET_TIMELINE)) {
             return null
         }
+
+        if (player.currentTimeline.isEmpty) {
+            return null
+        }
+
         return player.currentMediaItemIndex.takeIf { it != C.INDEX_UNSET }
     }
 }
