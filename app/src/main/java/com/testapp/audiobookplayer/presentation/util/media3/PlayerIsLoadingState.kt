@@ -27,7 +27,7 @@ class PlayerIsLoadingState(
         player.listen { events ->
             if (
                 events.containsAny(
-                    Player.EVENT_IS_LOADING_CHANGED
+                    Player.EVENT_IS_LOADING_CHANGED,
                 )
             ) {
                 value = resolvePlayerIsLoading()
