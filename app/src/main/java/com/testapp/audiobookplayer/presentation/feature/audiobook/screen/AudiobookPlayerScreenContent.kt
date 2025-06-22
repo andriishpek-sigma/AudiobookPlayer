@@ -86,6 +86,7 @@ private fun ActualContent(
         HeaderContent(
             modifier = Modifier
                 .weight(1f)
+                .padding(top = 32.dp)
                 .align(Alignment.CenterHorizontally),
             book = state.book,
         )
@@ -102,7 +103,7 @@ private fun ActualContent(
         AudiobookPlayerModeSwitch(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 32.dp),
+                .padding(top = 32.dp, bottom = 16.dp),
             isAudioModeSelected = state.isAudioMode,
             onAudioModeSelectionChange = {
                 dispatch(AudiobookPlayerIntent.ChangeMode(it))
@@ -209,7 +210,7 @@ private fun KeyPointTitle(
         text = text,
         color = AudiobookPlayerTheme.colors.secondaryContent,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.bodyMedium,
+        style = MaterialTheme.typography.labelLarge,
     )
 }
 
@@ -222,6 +223,7 @@ private fun KeyPointLabel(
         modifier = modifier,
         text = label ?: "",
         textAlign = TextAlign.Center,
+        maxLines = 3,
     )
 }
 
@@ -242,7 +244,7 @@ private fun AudioTimeContent(
 
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AudioTimeText(
@@ -278,7 +280,7 @@ private fun AudioTimeText(
         modifier = modifier,
         text = text,
         color = AudiobookPlayerTheme.colors.secondaryContent,
-        style = MaterialTheme.typography.bodySmall,
+        style = MaterialTheme.typography.bodyMedium,
     )
 }
 

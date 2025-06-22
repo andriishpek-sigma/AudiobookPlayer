@@ -4,6 +4,9 @@ package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
 import androidx.annotation.OptIn
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +23,7 @@ import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Replay5
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -45,6 +49,7 @@ import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
 import androidx.media3.ui.compose.state.rememberPreviousButtonState
 import com.testapp.audiobookplayer.R
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
+import com.testapp.audiobookplayer.presentation.util.media3.rememberPlayerIsLoadingState
 
 @Composable
 fun AudiobookPlayerButtonControls(
@@ -53,7 +58,7 @@ fun AudiobookPlayerButtonControls(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         PreviousTrackButton(
             mediaControllerState = mediaControllerState,
@@ -63,7 +68,7 @@ fun AudiobookPlayerButtonControls(
             mediaControllerState = mediaControllerState,
         )
 
-        PlayPauseButton(
+        PlayPauseButtonWithLoader(
             mediaControllerState = mediaControllerState,
         )
 
@@ -72,6 +77,35 @@ fun AudiobookPlayerButtonControls(
         )
 
         NextTrackButton(
+            mediaControllerState = mediaControllerState,
+        )
+    }
+}
+
+@Composable
+private fun PlayPauseButtonWithLoader(
+    mediaControllerState: State<MediaController?>,
+    modifier: Modifier = Modifier,
+) {
+    val playerIsLoadingState = mediaControllerState.value?.let {
+        rememberPlayerIsLoadingState(it)
+    }
+    val isLoading = playerIsLoadingState?.value != false
+
+    Box(
+        modifier = modifier,
+        propagateMinConstraints = true,
+    ) {
+        AnimatedVisibility(
+            modifier = Modifier.matchParentSize(),
+            visible = isLoading,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            CircularProgressIndicator()
+        }
+
+        PlayPauseButton(
             mediaControllerState = mediaControllerState,
         )
     }
