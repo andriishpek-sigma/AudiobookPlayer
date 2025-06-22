@@ -14,6 +14,7 @@ import com.google.common.util.concurrent.MoreExecutors
 @Composable
 fun rememberMediaControllerStateWithLifecycle(
     isEnabled: Boolean = true,
+    listener: (() -> MediaController.Listener)? = null,
     classProvider: () -> Class<*>,
 ): State<MediaController?> {
     val controllerState = remember { mutableStateOf<MediaController?>(null) }
@@ -27,7 +28,12 @@ fun rememberMediaControllerStateWithLifecycle(
 
         val sessionToken = SessionToken(context, ComponentName(context, classProvider()))
 
-        val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
+        val controllerFuture = MediaController.Builder(context, sessionToken)
+            .apply {
+                listener?.let { setListener(it()) }
+            }
+            .buildAsync()
+
         controllerFuture.addListener(
             {
                 if (controllerFuture.isDone) {

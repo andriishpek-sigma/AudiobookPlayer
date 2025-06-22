@@ -1,5 +1,7 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook
 
+import android.util.Log
+import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -10,7 +12,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
+import androidx.media3.session.SessionError
 import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
 import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerService
 import com.testapp.audiobookplayer.presentation.mvi.ConsumeEffects
@@ -29,6 +33,7 @@ fun AudiobookPlayerScreen(
     val audiobookMediaControllerState = rememberMediaControllerStateWithLifecycle(
         isEnabled = state.isPlayerDataLoaded,
         classProvider = { AudiobookPlayerService::class.java },
+        listener = { AudiobookMediaControllerListener() },
     )
 
     ConsumeEffects(store.observeEffect()) { effect ->
@@ -90,4 +95,13 @@ private fun createMediaItem(
                 .build(),
         )
         .build()
+}
+
+@OptIn(UnstableApi::class)
+private class AudiobookMediaControllerListener : MediaController.Listener {
+
+    override fun onError(controller: MediaController, sessionError: SessionError) {
+        val message = "MediaController error: ${sessionError.code} - ${sessionError.message}"
+        Log.d("AudiobookPlayer", message)
+    }
 }
