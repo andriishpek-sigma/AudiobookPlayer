@@ -27,22 +27,22 @@ class BookMockProviderImpl : BookMockProvider {
     override fun provideMockedChapters(bookId: BookId): List<BookChapter> = listOf(
         BookChapter(
             id = BookChapterId(1),
-            label = "Chapter 1",
+            label = "Mind reading is real",
             audioUrl = "https://download.samplelib.com/mp3/sample-6s.mp3",
         ),
         BookChapter(
             id = BookChapterId(2),
-            label = "Chapter 2",
+            label = "It's all about context and attentiveness",
             audioUrl = "https://download.samplelib.com/mp3/sample-9s.mp3",
         ),
         BookChapter(
             id = BookChapterId(3),
-            label = "Chapter 3",
+            label = "Identifying true motives",
             audioUrl = "https://download.samplelib.com/mp3/sample-12s.mp3",
         ),
         BookChapter(
             id = BookChapterId(4),
-            label = "Chapter 4",
+            label = "Silent expressions speak loader than words",
             audioUrl = "https://download.samplelib.com/mp3/sample-15s.mp3",
         ),
     )
