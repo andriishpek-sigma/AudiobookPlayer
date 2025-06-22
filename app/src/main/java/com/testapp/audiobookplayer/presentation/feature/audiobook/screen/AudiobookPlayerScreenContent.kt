@@ -86,6 +86,7 @@ private fun ActualContent(
         HeaderContent(
             modifier = Modifier
                 .weight(1f)
+                .padding(top = 32.dp)
                 .align(Alignment.CenterHorizontally),
             book = state.book,
         )
@@ -102,7 +103,7 @@ private fun ActualContent(
         AudiobookPlayerModeSwitch(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 32.dp),
+                .padding(top = 32.dp, bottom = 16.dp),
             isAudioModeSelected = state.isAudioMode,
             onAudioModeSelectionChange = {
                 dispatch(AudiobookPlayerIntent.ChangeMode(it))
