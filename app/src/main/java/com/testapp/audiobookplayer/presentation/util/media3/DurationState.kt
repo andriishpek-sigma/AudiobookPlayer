@@ -11,17 +11,17 @@ import androidx.media3.common.Player
 import androidx.media3.common.listen
 
 @Composable
-fun rememberContentDurationState(player: Player): ContentDurationState {
-    val contentDurationState = remember(player) { ContentDurationState(player) }
-    LaunchedEffect(player) { contentDurationState.observe() }
-    return contentDurationState
+fun rememberDurationState(player: Player): DurationState {
+    val durationState = remember(player) { DurationState(player) }
+    LaunchedEffect(player) { durationState.observe() }
+    return durationState
 }
 
-class ContentDurationState(
+class DurationState(
     private val player: Player,
 ) {
 
-    var value by mutableStateOf(resolveContentDuration())
+    var value by mutableStateOf(resolveDuration())
         private set
 
     suspend fun observe() {
@@ -33,15 +33,15 @@ class ContentDurationState(
                     Player.EVENT_AVAILABLE_COMMANDS_CHANGED,
                 )
             ) {
-                value = resolveContentDuration()
+                value = resolveDuration()
             }
         }
     }
 
-    private fun resolveContentDuration(): Long? {
+    private fun resolveDuration(): Long? {
         if (!player.isCommandAvailable(Player.COMMAND_GET_CURRENT_MEDIA_ITEM)) {
             return null
         }
-        return player.contentDuration.takeIf { it != C.TIME_UNSET }
+        return player.duration.takeIf { it != C.TIME_UNSET }
     }
 }

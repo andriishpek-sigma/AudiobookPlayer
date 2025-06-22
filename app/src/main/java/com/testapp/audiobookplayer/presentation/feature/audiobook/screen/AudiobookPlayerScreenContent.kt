@@ -42,9 +42,9 @@ import com.testapp.audiobookplayer.presentation.feature.audiobook.AudiobookPlaye
 import com.testapp.audiobookplayer.presentation.feature.audiobook.preview.SampleAudiobookPlayerStateProvider
 import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 import com.testapp.audiobookplayer.presentation.util.UiList
-import com.testapp.audiobookplayer.presentation.util.media3.rememberContentDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemSeekState
+import com.testapp.audiobookplayer.presentation.util.media3.rememberDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberLiveContentPositionState
 import java.util.Locale
 import kotlin.time.Duration
@@ -234,7 +234,7 @@ private fun AudioTimeContent(
         rememberCurrentMediaItemSeekState(it)
     }
     val durationState = mediaControllerState.value?.let {
-        rememberContentDurationState(it)
+        rememberDurationState(it)
     }
     val livePositionState = mediaControllerState.value?.let {
         rememberLiveContentPositionState(player = it, updatePeriodMillis = 25)
