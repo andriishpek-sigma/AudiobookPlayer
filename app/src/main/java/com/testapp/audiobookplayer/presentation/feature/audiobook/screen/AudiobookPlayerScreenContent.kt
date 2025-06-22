@@ -280,7 +280,7 @@ private fun AudioTimeText(
         modifier = modifier,
         text = text,
         color = AudiobookPlayerTheme.colors.secondaryContent,
-        style = MaterialTheme.typography.bodySmall,
+        style = MaterialTheme.typography.bodyMedium,
     )
 }
 
