@@ -65,7 +65,7 @@ private fun StartAudiobookPlaybackWhenLoaded(
 
     val audiobookMediaController = audiobookMediaControllerState.value ?: return
 
-    LaunchedEffect(book, chapters) {
+    LaunchedEffect(audiobookMediaController, book, chapters) {
         val mediaItems = chapters.map {
             createMediaItem(
                 book = book,
