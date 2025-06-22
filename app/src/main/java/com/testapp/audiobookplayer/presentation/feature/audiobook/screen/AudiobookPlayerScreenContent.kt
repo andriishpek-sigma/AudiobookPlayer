@@ -237,7 +237,7 @@ private fun AudioTimeContent(
         rememberDurationState(it)
     }
     val livePositionState = mediaControllerState.value?.let {
-        rememberLiveContentPositionState(player = it, updatePeriodMillis = 25)
+        rememberLiveContentPositionState(player = it, updatePeriodMillis = 1000)
     }
 
     Row(
