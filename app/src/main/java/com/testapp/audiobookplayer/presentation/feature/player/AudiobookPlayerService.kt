@@ -15,18 +15,10 @@ class AudiobookPlayerService : MediaSessionService() {
     private var mediaSession: MediaSession? = null
 
     // Create your player and media session in the onCreate lifecycle event
-    @OptIn(UnstableApi::class)
     override fun onCreate() {
         super.onCreate()
 
-        val basePlayer = ExoPlayer.Builder(this)
-            .setWakeMode(C.WAKE_MODE_NETWORK)
-            .setSeekBackIncrementMs(5000)
-            .setSeekForwardIncrementMs(10000)
-            .setMaxSeekToPreviousPositionMs(Long.MAX_VALUE)
-            .setHandleAudioBecomingNoisy(true)
-            .build()
-
+        val basePlayer = createExoPlayerInstance()
         val audiobookPlayer = AudiobookPlayer(basePlayer)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -54,4 +46,14 @@ class AudiobookPlayerService : MediaSessionService() {
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
         return mediaSession
     }
+
+    @OptIn(UnstableApi::class)
+    private fun createExoPlayerInstance(): ExoPlayer =
+        ExoPlayer.Builder(this)
+            .setWakeMode(C.WAKE_MODE_NETWORK)
+            .setSeekBackIncrementMs(5000)
+            .setSeekForwardIncrementMs(10000)
+            .setMaxSeekToPreviousPositionMs(Long.MAX_VALUE)
+            .setHandleAudioBecomingNoisy(true)
+            .build()
 }
