@@ -44,6 +44,7 @@ import com.testapp.audiobookplayer.presentation.theme.AudiobookPlayerTheme
 import com.testapp.audiobookplayer.presentation.util.UiList
 import com.testapp.audiobookplayer.presentation.util.media3.rememberContentDurationState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemIndexState
+import com.testapp.audiobookplayer.presentation.util.media3.rememberCurrentMediaItemSeekState
 import com.testapp.audiobookplayer.presentation.util.media3.rememberLiveContentPositionState
 import java.util.Locale
 import kotlin.time.Duration
@@ -229,6 +230,9 @@ private fun AudioTimeContent(
     mediaControllerState: State<MediaController?>,
     modifier: Modifier = Modifier,
 ) {
+    val seekState = mediaControllerState.value?.let {
+        rememberCurrentMediaItemSeekState(it)
+    }
     val durationState = mediaControllerState.value?.let {
         rememberContentDurationState(it)
     }
@@ -247,10 +251,11 @@ private fun AudioTimeContent(
 
         AudiobookPlayerProgressSlider(
             modifier = Modifier.weight(1f),
+            enabled = seekState?.isEnabled == true,
             position = livePositionState?.value ?: 0,
             duration = durationState?.value ?: 0,
             updatePosition = { position ->
-                mediaControllerState.value?.seekTo(position)
+                seekState?.seekTo(position)
             },
         )
 
