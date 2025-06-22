@@ -10,7 +10,7 @@ interface BookMockProvider {
 
     fun provideMockedBook(id: BookId): Book
 
-    fun provideMockedChapters(id: BookId): List<BookChapter>
+    fun provideMockedChapters(bookId: BookId): List<BookChapter>
 }
 
 @Factory
@@ -24,7 +24,7 @@ class BookMockProviderImpl : BookMockProvider {
             "3925134721/0266554465.jpeg",
     )
 
-    override fun provideMockedChapters(id: BookId): List<BookChapter> = listOf(
+    override fun provideMockedChapters(bookId: BookId): List<BookChapter> = listOf(
         BookChapter(
             id = BookChapterId(1),
             label = "Chapter 1",

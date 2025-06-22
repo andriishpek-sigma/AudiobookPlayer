@@ -20,10 +20,10 @@ class BookRepositoryImpl(
         )
     }
 
-    override suspend fun getBookChapters(id: BookId): Result<List<BookChapter>> {
+    override suspend fun getBookChapters(bookId: BookId): Result<List<BookChapter>> {
         delay(1000)
         return Result.success(
-            bookMockProvider.provideMockedChapters(id),
+            bookMockProvider.provideMockedChapters(bookId),
         )
     }
 }

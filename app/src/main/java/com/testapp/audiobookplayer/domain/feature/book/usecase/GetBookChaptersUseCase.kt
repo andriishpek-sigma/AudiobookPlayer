@@ -7,7 +7,7 @@ import org.koin.core.annotation.Factory
 
 interface GetBookChaptersUseCase {
 
-    suspend operator fun invoke(id: BookId): Result<List<BookChapter>>
+    suspend operator fun invoke(bookId: BookId): Result<List<BookChapter>>
 }
 
 @Factory
@@ -15,7 +15,7 @@ class GetBookChaptersUseCaseImpl(
     private val repository: BookRepository,
 ) : GetBookChaptersUseCase {
 
-    override suspend fun invoke(id: BookId): Result<List<BookChapter>> {
-        return repository.getBookChapters(id)
+    override suspend fun invoke(bookId: BookId): Result<List<BookChapter>> {
+        return repository.getBookChapters(bookId)
     }
 }

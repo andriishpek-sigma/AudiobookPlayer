@@ -8,5 +8,5 @@ interface BookRepository {
 
     suspend fun getBook(id: BookId): Result<Book>
 
-    suspend fun getBookChapters(id: BookId): Result<List<BookChapter>>
+    suspend fun getBookChapters(bookId: BookId): Result<List<BookChapter>>
 }
