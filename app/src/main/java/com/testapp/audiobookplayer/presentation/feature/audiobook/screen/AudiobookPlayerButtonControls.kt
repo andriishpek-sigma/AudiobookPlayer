@@ -53,7 +53,7 @@ fun AudiobookPlayerButtonControls(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         PreviousTrackButton(
             mediaControllerState = mediaControllerState,
