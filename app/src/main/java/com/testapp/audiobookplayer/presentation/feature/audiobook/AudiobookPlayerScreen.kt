@@ -67,7 +67,7 @@ private fun StartAudiobookPlaybackWhenLoaded(
             )
         }
 
-        audiobookMediaController.addMediaItems(mediaItems)
+        audiobookMediaController.setMediaItems(mediaItems)
         audiobookMediaController.repeatMode = Player.REPEAT_MODE_OFF
         audiobookMediaController.prepare()
         audiobookMediaController.play()
