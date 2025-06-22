@@ -2,6 +2,10 @@
 
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.hoverable
@@ -42,6 +46,15 @@ fun AudiobookPlayerProgressSlider(
     var uncommittedProgress by remember { mutableStateOf<Float?>(null) }
     var isUncommittedProgressNotified by remember { mutableStateOf(false) }
 
+    val animatedCurrentProgress by animateFloatAsState(
+        targetValue = uncommittedProgress ?: progress,
+        animationSpec = if (uncommittedProgress != null) {
+            snap()
+        } else {
+            spring(stiffness = Spring.StiffnessMedium)
+        },
+    )
+
     val interactionSource = remember { MutableInteractionSource() }
 
     // Reset uncommitted progress only when position update is completed
@@ -57,7 +70,7 @@ fun AudiobookPlayerProgressSlider(
     Slider(
         modifier = modifier.fillMaxWidth(),
         enabled = enabled,
-        value = uncommittedProgress ?: progress,
+        value = animatedCurrentProgress,
         onValueChange = {
             uncommittedProgress = it
             isUncommittedProgressNotified = false
