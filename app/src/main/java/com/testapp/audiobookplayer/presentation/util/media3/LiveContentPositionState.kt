@@ -33,6 +33,8 @@ fun rememberLiveContentPositionState(
     // Periodically update content position
     LaunchedEffect(isPlaying) {
         if (!isPlaying) {
+            // Sync up-to-date position when playback ends
+            contentPositionState.update()
             return@LaunchedEffect
         }
 
