@@ -52,6 +52,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.uiCompose)
+    implementation(libs.androidx.media3.exoplayer)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
@@ -59,11 +63,16 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.materialIcons)
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.annotations)
     ksp(libs.koin.compiler)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.okhttp)
+    implementation(libs.coil.svg)
 
     lintChecks(libs.slack.compose.lint)
 

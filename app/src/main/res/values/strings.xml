@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AudiobookPlayer</string>
+
+    <!--Player screen-->
+    <string name="audiobook_player_key_point_title">Key point %1$d of %2$d</string>
+    <string name="audiobook_player_playback_speed_button">x speed</string>
+
+    <!--PLayer controls-->
+    <string name="player_play_description">Play</string>
+    <string name="player_pause_description">Pause</string>
+    <string name="player_replay_5_description">Replay 5 seconds</string>
+    <string name="player_forward_10_description">Forward 10 seconds</string>
+    <string name="player_skip_previous_description">Previous chapter</string>
+    <string name="player_skip_next_description">Next chapter</string>
 </resources>
