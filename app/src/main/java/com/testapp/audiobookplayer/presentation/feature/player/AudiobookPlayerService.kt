@@ -19,13 +19,15 @@ class AudiobookPlayerService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
 
-        val player = ExoPlayer.Builder(this)
+        val basePlayer = ExoPlayer.Builder(this)
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .setSeekBackIncrementMs(5000)
             .setSeekForwardIncrementMs(10000)
             .setMaxSeekToPreviousPositionMs(Long.MAX_VALUE)
             .setHandleAudioBecomingNoisy(true)
             .build()
+
+        val audiobookPlayer = AudiobookPlayer(basePlayer)
 
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -34,7 +36,7 @@ class AudiobookPlayerService : MediaSessionService() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
-        mediaSession = MediaSession.Builder(this, player)
+        mediaSession = MediaSession.Builder(this, audiobookPlayer)
             .setSessionActivity(pendingIntent)
             .build()
     }
