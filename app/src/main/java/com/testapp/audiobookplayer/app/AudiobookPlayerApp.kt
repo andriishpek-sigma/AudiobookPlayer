@@ -15,7 +15,10 @@ class AudiobookPlayerApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@AudiobookPlayerApp)
-            modules(AudiobookPlayerModule().module)
+            modules(
+                DispatchersModule().module,
+                AudiobookPlayerModule().module
+            )
         }
     }
 }
