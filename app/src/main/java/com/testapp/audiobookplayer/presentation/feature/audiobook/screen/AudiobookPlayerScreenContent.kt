@@ -1,5 +1,6 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook.screen
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -172,7 +173,9 @@ private fun BottomContent(
         )
 
         KeyPointLabel(
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             label = currentChapter?.label,
         )
 
@@ -222,12 +225,16 @@ private fun KeyPointLabel(
     label: String?,
     modifier: Modifier = Modifier,
 ) {
-    Text(
+    AnimatedContent(
         modifier = modifier,
-        text = label ?: "",
-        textAlign = TextAlign.Center,
-        maxLines = 3,
-    )
+        targetState = label,
+    ) { currentLabel ->
+        Text(
+            text = currentLabel ?: "",
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+        )
+    }
 }
 
 @Composable
