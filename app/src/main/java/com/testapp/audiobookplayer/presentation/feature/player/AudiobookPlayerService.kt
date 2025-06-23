@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import androidx.annotation.OptIn
 import androidx.media3.common.C
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -56,4 +57,7 @@ class AudiobookPlayerService : MediaSessionService() {
             .setMaxSeekToPreviousPositionMs(Long.MAX_VALUE)
             .setHandleAudioBecomingNoisy(true)
             .build()
+            .apply {
+                repeatMode = Player.REPEAT_MODE_OFF
+            }
 }

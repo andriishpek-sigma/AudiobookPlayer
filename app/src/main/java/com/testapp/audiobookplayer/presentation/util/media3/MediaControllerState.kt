@@ -23,7 +23,7 @@ fun rememberMediaControllerStateWithLifecycle(
     LifecycleStartEffect(isEnabled) {
         if (!isEnabled) {
             controllerState.value = null
-            onStopOrDispose {}
+            return@LifecycleStartEffect onStopOrDispose {}
         }
 
         val sessionToken = SessionToken(context, ComponentName(context, classProvider()))

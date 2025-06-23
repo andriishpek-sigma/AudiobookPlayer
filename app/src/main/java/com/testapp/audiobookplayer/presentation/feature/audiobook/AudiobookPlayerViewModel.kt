@@ -9,9 +9,9 @@ import com.testapp.audiobookplayer.domain.feature.book.usecase.GetBookUseCase
 import com.testapp.audiobookplayer.presentation.mvi.MviViewModel
 import com.testapp.audiobookplayer.presentation.mvi.dispatch
 import com.testapp.audiobookplayer.presentation.util.asUiList
-import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 import org.koin.core.annotation.InjectedParam
+import kotlinx.coroutines.launch
 
 @KoinViewModel
 class AudiobookPlayerViewModel(

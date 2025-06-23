@@ -6,20 +6,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionError
 import com.testapp.audiobookplayer.domain.feature.book.model.BookId
 import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.AudiobookPlayerScreenContent
 import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerService
-import com.testapp.audiobookplayer.presentation.mvi.ConsumeEffects
+import com.testapp.audiobookplayer.presentation.util.asUiList
 import com.testapp.audiobookplayer.presentation.util.media3.rememberMediaControllerStateWithLifecycle
+import com.testapp.audiobookplayer.presentation.util.media3.smartUpdateMediaItems
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -37,10 +38,11 @@ fun AudiobookPlayerScreen(
         listener = { AudiobookMediaControllerListener() },
     )
 
-    ConsumeEffects(store.observeEffect()) { effect ->
+    // Enable when effects are added to the screen
+//    ConsumeEffects(store.observeEffect()) { effect ->
 //        when (effect) {
 //        }
-    }
+//    }
 
     AudiobookPlayerScreenContent(
         modifier = modifier,
@@ -65,16 +67,17 @@ private fun StartAudiobookPlaybackWhenLoaded(
 
     val audiobookMediaController = audiobookMediaControllerState.value ?: return
 
-    LaunchedEffect(audiobookMediaController, book, chapters) {
-        val mediaItems = chapters.map {
+    val mediaItems = remember(book, chapters) {
+        chapters.map {
             createMediaItem(
                 book = book,
                 chapter = it,
             )
-        }
+        }.asUiList()
+    }
 
-        audiobookMediaController.setMediaItems(mediaItems)
-        audiobookMediaController.repeatMode = Player.REPEAT_MODE_OFF
+    LaunchedEffect(audiobookMediaController, mediaItems) {
+        audiobookMediaController.smartUpdateMediaItems(mediaItems)
         audiobookMediaController.prepare()
         audiobookMediaController.play()
     }
