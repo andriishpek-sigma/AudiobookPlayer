@@ -17,7 +17,7 @@ class AudiobookPlayerApp : Application() {
             androidContext(this@AudiobookPlayerApp)
             modules(
                 DispatchersModule().module,
-                AudiobookPlayerModule().module
+                AudiobookPlayerModule().module,
             )
         }
     }

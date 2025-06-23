@@ -1,9 +1,9 @@
 package com.testapp.audiobookplayer.app
 
-import kotlinx.coroutines.Dispatchers
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Named
+import kotlinx.coroutines.Dispatchers
 
 @Module
 class DispatchersModule {
