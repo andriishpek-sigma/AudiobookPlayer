@@ -55,6 +55,10 @@ app. Media files are resolved from public URLs.
 
 Koin and Koin Annotations are used for dependency injection.
 
+### Tests
+
+Audiobook player screen view model is covered with unit tests.
+
 ### Code style
 
 The project uses `ktlint` for Kotlin code style. Run `ktlintFormat --rerun-tasks` to format code.
@@ -70,6 +74,7 @@ Additionally, a linter for Compose is set up to display warnings in IDE code edi
 - **ExoPlayer**
 - **Koin** (with Koin Annotations)
 - **ktlint** (plus Compose linter)
+- **JUnit, MockK**
 
 ## Project Structure
 
