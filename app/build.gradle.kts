@@ -77,6 +77,7 @@ dependencies {
     lintChecks(libs.slack.compose.lint)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.koin.test.android)
 

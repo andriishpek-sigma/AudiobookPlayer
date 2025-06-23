@@ -53,6 +53,7 @@ slack-compose-lint = { group = "com.slack.lint.compose", name = "compose-lint-ch
 
 # Testing
 junit = { group = "junit", name = "junit", version = "4.13.2" }
+mockk = { group = "io.mockk", name = "mockk", version = "1.14.4" }
 
 androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
