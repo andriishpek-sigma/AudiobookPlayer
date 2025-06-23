@@ -23,9 +23,7 @@ class AudiobookPlayerViewModel(
 ) {
 
     init {
-        dispatch(
-            AudiobookPlayerIntent.LoadData(bookId = bookId),
-        )
+        dispatch(AudiobookPlayerIntent.LoadData)
     }
 
     override fun reduce(
