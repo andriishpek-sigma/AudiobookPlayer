@@ -12,7 +12,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionError
@@ -79,7 +78,6 @@ private fun StartAudiobookPlaybackWhenLoaded(
 
     LaunchedEffect(audiobookMediaController, mediaItems) {
         audiobookMediaController.smartUpdateMediaItems(mediaItems)
-        audiobookMediaController.repeatMode = Player.REPEAT_MODE_OFF
         audiobookMediaController.prepare()
         audiobookMediaController.play()
     }
