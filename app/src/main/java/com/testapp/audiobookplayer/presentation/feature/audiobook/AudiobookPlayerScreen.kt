@@ -21,6 +21,7 @@ import com.testapp.audiobookplayer.presentation.feature.audiobook.screen.Audiobo
 import com.testapp.audiobookplayer.presentation.feature.player.AudiobookPlayerService
 import com.testapp.audiobookplayer.presentation.util.asUiList
 import com.testapp.audiobookplayer.presentation.util.media3.rememberMediaControllerStateWithLifecycle
+import com.testapp.audiobookplayer.presentation.util.media3.smartUpdateMediaItems
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -77,7 +78,7 @@ private fun StartAudiobookPlaybackWhenLoaded(
     }
 
     LaunchedEffect(audiobookMediaController, mediaItems) {
-        audiobookMediaController.setMediaItems(mediaItems)
+        audiobookMediaController.smartUpdateMediaItems(mediaItems)
         audiobookMediaController.repeatMode = Player.REPEAT_MODE_OFF
         audiobookMediaController.prepare()
         audiobookMediaController.play()
