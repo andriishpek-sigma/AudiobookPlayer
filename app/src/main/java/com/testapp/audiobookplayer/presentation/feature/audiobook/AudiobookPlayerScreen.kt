@@ -37,10 +37,11 @@ fun AudiobookPlayerScreen(
         listener = { AudiobookMediaControllerListener() },
     )
 
-    ConsumeEffects(store.observeEffect()) { effect ->
+    // Enable when effects are added to the screen
+//    ConsumeEffects(store.observeEffect()) { effect ->
 //        when (effect) {
 //        }
-    }
+//    }
 
     AudiobookPlayerScreenContent(
         modifier = modifier,
