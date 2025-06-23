@@ -1,14 +1,11 @@
 package com.testapp.audiobookplayer.presentation.feature.audiobook
 
-import com.testapp.audiobookplayer.domain.feature.book.model.BookId
 import com.testapp.audiobookplayer.presentation.mvi.UiIntent
 import com.testapp.audiobookplayer.presentation.util.UiList
 
 sealed class AudiobookPlayerIntent : UiIntent {
 
-    data class LoadData(
-        val bookId: BookId,
-    ) : AudiobookPlayerIntent()
+    data object LoadData : AudiobookPlayerIntent()
 
     data class UpdateBookData(
         val book: AudiobookPlayerState.Book,
