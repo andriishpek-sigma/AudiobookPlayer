@@ -8,6 +8,8 @@ with support for background playback.
 &nbsp;&nbsp;
 ![](/docs/assets/cover_notification.png)
 
+Feel free to download and install the app with [APK file](/docs/assets/app-debug.apk).
+
 ## Getting Started
 
 1. Clone the repository
